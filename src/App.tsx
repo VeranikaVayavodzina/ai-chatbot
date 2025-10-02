@@ -29,9 +29,7 @@ function App() {
         >
           <span className={styles.count}>count is {count}</span>
         </button>
-        <p className={styles.description}>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <p className={styles.description}>ИЗМЕНЕН</p>
       </div>
 
       <p className={styles.readTheDocs}>

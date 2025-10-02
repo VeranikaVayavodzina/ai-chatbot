@@ -15,16 +15,16 @@ function oe() {
   $ = 1;
   var i = Symbol.for("react.transitional.element"), f = Symbol.for("react.fragment");
   function u(_, s, c) {
-    var p = null;
-    if (c !== void 0 && (p = "" + c), s.key !== void 0 && (p = "" + s.key), "key" in s) {
+    var m = null;
+    if (c !== void 0 && (m = "" + c), s.key !== void 0 && (m = "" + s.key), "key" in s) {
       c = {};
-      for (var m in s)
-        m !== "key" && (c[m] = s[m]);
+      for (var p in s)
+        p !== "key" && (c[p] = s[p]);
     } else c = s;
     return s = c.ref, {
       $$typeof: i,
       type: _,
-      key: p,
+      key: m,
       ref: s !== void 0 ? s : null,
       props: c
     };
@@ -125,14 +125,14 @@ function ne() {
     function c() {
       return Error("react-stack-top-frame");
     }
-    function p(e) {
+    function m(e) {
       if (N.call(e, "key")) {
         var r = Object.getOwnPropertyDescriptor(e, "key").get;
         if (r && r.isReactWarning) return !1;
       }
       return e.key !== void 0;
     }
-    function m(e, r) {
+    function p(e, r) {
       function o() {
         P || (P = !0, console.error(
           "%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)",
@@ -214,12 +214,12 @@ React keys must be passed directly to JSX without using spread:
           a
         ), Y[a + n] = !0);
       }
-      if (a = null, o !== void 0 && (u(o), a = "" + o), p(r) && (u(r.key), a = "" + r.key), "key" in r) {
+      if (a = null, o !== void 0 && (u(o), a = "" + o), m(r) && (u(r.key), a = "" + r.key), "key" in r) {
         o = {};
         for (var w in r)
           w !== "key" && (o[w] = r[w]);
       } else o = r;
-      return a && m(
+      return a && p(
         o,
         typeof e == "function" ? e.displayName || e.name || "Unknown" : e
       ), L(
@@ -277,7 +277,7 @@ function ae() {
   return M || (M = 1, process.env.NODE_ENV === "production" ? b.exports = oe() : b.exports = ne()), b.exports;
 }
 var t = ae();
-const se = "_app_18rh1_1", le = "_logoContainer_18rh1_9", ce = "_logo_18rh1_9", ie = "_logoReact_18rh1_27", ue = "_title_18rh1_31", fe = "_card_18rh1_38", de = "_button_18rh1_46", _e = "_count_18rh1_68", pe = "_description_18rh1_74", me = "_readTheDocs_18rh1_79", l = {
+const se = "_app_18rh1_1", le = "_logoContainer_18rh1_9", ce = "_logo_18rh1_9", ie = "_logoReact_18rh1_27", ue = "_title_18rh1_31", fe = "_card_18rh1_38", de = "_button_18rh1_46", _e = "_count_18rh1_68", me = "_description_18rh1_74", pe = "_readTheDocs_18rh1_79", l = {
   app: se,
   logoContainer: le,
   logo: ce,
@@ -286,8 +286,8 @@ const se = "_app_18rh1_1", le = "_logoContainer_18rh1_9", ce = "_logo_18rh1_9", 
   card: fe,
   button: de,
   count: _e,
-  description: pe,
-  readTheDocs: me
+  description: me,
+  readTheDocs: pe
 }, he = () => /* @__PURE__ */ t.jsxs(
   "svg",
   {
@@ -384,11 +384,7 @@ function Re() {
           ] })
         }
       ),
-      /* @__PURE__ */ t.jsxs("p", { className: l.description, children: [
-        "Edit ",
-        /* @__PURE__ */ t.jsx("code", { children: "src/App.tsx" }),
-        " and save to test HMR"
-      ] })
+      /* @__PURE__ */ t.jsx("p", { className: l.description, children: "ИЗМЕНЕН" })
     ] }),
     /* @__PURE__ */ t.jsx("p", { className: l.readTheDocs, children: "Click on the Vite and React logos to learn more" })
   ] });
