@@ -10,35 +10,24 @@ export default defineConfig(({ mode }) => {
         lib: {
           entry: resolve(__dirname, "src/lib.tsx"),
           name: "AIChatBot",
-          formats: ["es", "umd"],
-          // Добавляем хеш к имени файла
-          fileName: (format) => {
-            const timestamp = Date.now();
-            const hash = Math.random().toString(36).substring(2, 8);
-            return `chatbot-${hash}-${timestamp}.${
-              format === "es" ? "js" : "umd.js"
-            }`;
-          },
+          formats: ["es", "umd"] as const,
+          fileName: (format: string) =>
+            `chatbot.${format === "es" ? "js" : "umd.js"}`,
         },
         rollupOptions: {
           external: ["react", "react-dom"],
           output: {
-            exports: "named",
+            exports: "named" as const,
             globals: {
               react: "React",
               "react-dom": "ReactDOM",
             },
-            // Хеширование для ассетов
-            assetFileNames: (assetInfo) => {
-              const timestamp = Date.now();
-              const hash = Math.random().toString(36).substring(2, 8);
-              const ext = assetInfo.name?.split(".").pop();
-              const name = assetInfo.name?.replace(`.${ext}`, "");
-              return `${name}-${hash}-${timestamp}.${ext}`;
+            assetFileNames: (assetInfo: any) => {
+              if (assetInfo.name === "style.css") return "chatbot.css";
+              return assetInfo.name || "asset";
             },
           },
         },
-        cssCodeSplit: false,
       },
     };
   }

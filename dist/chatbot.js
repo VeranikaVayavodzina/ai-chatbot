@@ -390,6 +390,5 @@ function Re() {
   ] });
 }
 export {
-  Re as App,
   Re as default
 };
