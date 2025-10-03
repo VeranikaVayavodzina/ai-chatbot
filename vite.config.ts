@@ -14,10 +14,21 @@ export default defineConfig(({ mode }) => {
           fileName: (format) => `chatbot.${format === "es" ? "js" : "umd.js"}`,
         },
         rollupOptions: {
-          // Убираем external чтобы React был встроен в bundle
           output: {
             exports: "named",
+            intro:
+              'if (typeof process === "undefined") { var process = { env: { NODE_ENV: "production" } }; }',
           },
+          plugins: [
+            {
+              name: "replace-env",
+              transform(code) {
+                return code
+                  .replace(/process\.env\.NODE_ENV/g, '"production"')
+                  .replace(/__DEV__/g, "false");
+              },
+            },
+          ],
         },
         cssCodeSplit: false,
         assetsInlineLimit: 100000,
