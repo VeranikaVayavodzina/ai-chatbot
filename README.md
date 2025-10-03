@@ -1,74 +1,184 @@
-# React + TypeScript + Vite
+# AI ChatBot Plugin
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Standalone React chatbot plugin that can be embedded in any web application without requiring React dependencies.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ✅ **Standalone** - No external React dependencies required
+- ✅ **Framework agnostic** - Works with Angular, Vue, Vanilla JS, etc.
+- ✅ **Optimized** - Production-ready with dead code elimination
+- ✅ **TypeScript** - Full TypeScript support
+- ✅ **Small bundle** - Only ~197KB (62KB gzipped)
 
-## React Compiler
+## Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### From GitHub
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install git+https://github.com/YOUR_USERNAME/ai-chatbot-plugin.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### From npm (if published)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install ai-chatbot-plugin
 ```
-# ai-chatbot
+
+## Usage
+
+### Angular
+
+1. Install the package:
+```bash
+npm install git+https://github.com/YOUR_USERNAME/ai-chatbot-plugin.git
+```
+
+2. Configure Angular to copy plugin assets in `angular.json`:
+```json
+{
+  "assets": [
+    {
+      "glob": "**/*",
+      "input": "node_modules/ai-chatbot-plugin/dist",
+      "output": "/assets/ai-chatbot-plugin"
+    }
+  ]
+}
+```
+
+3. Use in your component:
+```typescript
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: `<div id="ai-chatbot-root"></div>`
+})
+export class AppComponent implements OnInit {
+  
+  async ngOnInit() {
+    await this.loadChatBot();
+  }
+
+  private async loadChatBot() {
+    // Load the plugin script
+    await this.loadScript('/assets/ai-chatbot-plugin/chatbot.umd.js');
+    
+    // Load CSS
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/assets/ai-chatbot-plugin/ai-chatbot-plugin.css';
+    document.head.appendChild(link);
+
+    // Render the chatbot
+    const container = document.getElementById('ai-chatbot-root');
+    if (container && (window as any).AIChatBot) {
+      (window as any).AIChatBot.renderChatBot(container);
+    }
+  }
+
+  private loadScript(src: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error(`Failed to load script: ${src}`));
+      document.head.appendChild(script);
+    });
+  }
+}
+```
+
+### Vue.js
+
+```vue
+<template>
+  <div id="ai-chatbot-root"></div>
+</template>
+
+<script>
+export default {
+  async mounted() {
+    await this.loadChatBot();
+  },
+  
+  methods: {
+    async loadChatBot() {
+      await this.loadScript('/assets/ai-chatbot-plugin/chatbot.umd.js');
+      
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = '/assets/ai-chatbot-plugin/ai-chatbot-plugin.css';
+      document.head.appendChild(link);
+
+      const container = document.getElementById('ai-chatbot-root');
+      if (container && window.AIChatBot) {
+        window.AIChatBot.renderChatBot(container);
+      }
+    },
+    
+    loadScript(src) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+  }
+}
+</script>
+```
+
+### Vanilla JavaScript
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="./node_modules/ai-chatbot-plugin/dist/ai-chatbot-plugin.css">
+</head>
+<body>
+  <div id="ai-chatbot-root"></div>
+  
+  <script src="./node_modules/ai-chatbot-plugin/dist/chatbot.umd.js"></script>
+  <script>
+    const container = document.getElementById('ai-chatbot-root');
+    AIChatBot.renderChatBot(container);
+  </script>
+</body>
+</html>
+```
+
+## API
+
+### `AIChatBot.renderChatBot(container: HTMLElement)`
+
+Renders the chatbot component into the specified container element.
+
+**Parameters:**
+- `container` - The DOM element where the chatbot will be rendered
+
+**Returns:**
+- React root instance for cleanup if needed
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build:lib
+
+# Lint code
+npm run lint
+```
+
+## License
+
+MIT
