@@ -14,19 +14,13 @@ export default defineConfig(({ mode }) => {
           fileName: (format) => `chatbot.${format === "es" ? "js" : "umd.js"}`,
         },
         rollupOptions: {
-          external: ["react", "react-dom"],
+          // Убираем external чтобы React был встроен в bundle
           output: {
             exports: "named",
-            globals: {
-              react: "React",
-              "react-dom": "ReactDOM",
-            },
           },
         },
-        // Встраиваем CSS в JS
         cssCodeSplit: false,
-        // Встраиваем ассеты как base64
-        assetsInlineLimit: 100000, // 100KB - все файлы меньше этого размера будут встроены
+        assetsInlineLimit: 100000,
       },
     };
   }
