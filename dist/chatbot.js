@@ -384,7 +384,7 @@ function Re() {
           ] })
         }
       ),
-      /* @__PURE__ */ t.jsx("p", { className: l.description, children: "ИЗМЕНЕН" })
+      /* @__PURE__ */ t.jsx("p", { className: l.description, children: "ИЗМЕНЕН 2.0" })
     ] }),
     /* @__PURE__ */ t.jsx("p", { className: l.readTheDocs, children: "Click on the Vite and React logos to learn more" })
   ] });

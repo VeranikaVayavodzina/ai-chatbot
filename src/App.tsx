@@ -29,7 +29,7 @@ function App() {
         >
           <span className={styles.count}>count is {count}</span>
         </button>
-        <p className={styles.description}>ИЗМЕНЕН</p>
+        <p className={styles.description}>ИЗМЕНЕН 2.0</p>
       </div>
 
       <p className={styles.readTheDocs}>

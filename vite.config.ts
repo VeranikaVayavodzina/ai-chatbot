@@ -10,24 +10,23 @@ export default defineConfig(({ mode }) => {
         lib: {
           entry: resolve(__dirname, "src/lib.tsx"),
           name: "AIChatBot",
-          formats: ["es", "umd"] as const,
-          fileName: (format: string) =>
-            `chatbot.${format === "es" ? "js" : "umd.js"}`,
+          formats: ["es", "umd"],
+          fileName: (format) => `chatbot.${format === "es" ? "js" : "umd.js"}`,
         },
         rollupOptions: {
           external: ["react", "react-dom"],
           output: {
-            exports: "named" as const,
+            exports: "named",
             globals: {
               react: "React",
               "react-dom": "ReactDOM",
             },
-            assetFileNames: (assetInfo: any) => {
-              if (assetInfo.name === "style.css") return "chatbot.css";
-              return assetInfo.name || "asset";
-            },
           },
         },
+        // Встраиваем CSS в JS
+        cssCodeSplit: false,
+        // Встраиваем ассеты как base64
+        assetsInlineLimit: 100000, // 100KB - все файлы меньше этого размера будут встроены
       },
     };
   }
